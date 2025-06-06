@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View , Image } from "react-native";
 import { useRouter } from "expo-router";
 import Logo from '@/assets/images/foodster-logo.png';
+import styles from "@/components/styles.jsx";
 
 export default function WelcomeScreen() {
   const router = useRouter();
@@ -11,40 +12,10 @@ export default function WelcomeScreen() {
       <Text style={styles.title}>Welcome!</Text>
       <TouchableOpacity
       style={styles.button}
-      // onPress={() => router.push('/auth')}
-      onPress={() => router.push('/home')}
+      onPress={() => router.push('/auth')}
       >
         <Text style={styles.buttonText}>Home</Text>
       </TouchableOpacity>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-    backgroundColor: '#f8f9fa',
-    marginTop: -100
-  },
-  title: {
-    fontSize: 50,
-    fontWeight: 'bold',
-    padding: 20,
-    textAlign: 'center'
-  },
-  button: {
-    backgroundColor: '#00bd52',
-    paddingVertical: 12,
-    paddingHorizontal: 50,
-    borderRadius: 20,
-    alignItems: 'center'
-  },
-  buttonText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#ffffff'
-  }
-})
