@@ -40,6 +40,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#ffffff'
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 20,
+    padding: 12
   }
 })
 
