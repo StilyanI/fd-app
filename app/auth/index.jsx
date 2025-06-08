@@ -15,23 +15,23 @@ export default function AuthScreen() {
   const setReadableError = (error) => {
     switch(error.code){
       case AuthErrorCodes.INVALID_PASSWORD:
-          setError("Wrong password")
-          break;
+        setError("Wrong password")
+        break;
       case AuthErrorCodes.INVALID_EMAIL:
-          setError("Invalid email")
-          break;
-        case AuthErrorCodes.INVALID_LOGIN_CREDENTIALS:
-          setError("User does not exist")
-          break;
-        case AuthErrorCodes.EMAIL_EXISTS:
-          setError("Account with email already exists")
-          break;
-        case AuthErrorCodes.WEAK_PASSWORD:
-          setError("Password must have at least 6 charachters")
-          break;
-        default:
-          setError(error.code)
-          break;
+        setError("Invalid email")
+        break;
+      case AuthErrorCodes.INVALID_LOGIN_CREDENTIALS:
+        setError("Email or password is wrong")
+        break;
+      case AuthErrorCodes.EMAIL_EXISTS:
+        setError("Account with email already exists")
+        break;
+      case AuthErrorCodes.WEAK_PASSWORD:
+        setError("Password must have at least 6 charachters")
+        break;
+      default:
+        setError(error.code)
+        break;
     }
   }
 
