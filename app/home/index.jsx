@@ -1,6 +1,6 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, FlatList } from "react-native";
-import styles from "@/components/styles.jsx";
 import homeStyles from "@/components/homeStyles.jsx";
+import styles from "@/components/styles.jsx";
+import { FlatList, Text, TouchableOpacity, View } from "react-native";
 
 //data for testing
 const restaurants = [
