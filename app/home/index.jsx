@@ -1,24 +1,30 @@
 import homeStyles from "@/components/homeStyles.jsx";
 import styles from "@/components/styles.jsx";
+import { useState, useEffect } from "react";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
-
-//data for testing
-const restaurants = [
-  {
-    id: 1,
-    name: "McDonald's",
-    cuisine: "Burgers",
-    rating: 4.1
-  },
-  {
-    id: 2,
-    name: "Happy",
-    cuisine: "Mixed",
-    rating: 4.7
-  }
-];
+import { db } from "@/backend/firebaseConfig.js";
+import { collection, getDocs } from "firebase/firestore";
 
 export default function Home() {
+  const [restaurants, setRestaurants] = useState([]);
+
+  const getRestaurants = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, 'restaurants'));
+      const data = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setRestaurants(data);
+    } catch (error) {
+      console.error('Error fetching restaurants:', error);
+    }
+  };
+
+  useEffect(() => {
+    getRestaurants();
+  }, []);
+
   const renderRestaurant = ({ item }) => (
     <TouchableOpacity style={homeStyles.restaurantCard}>
       
