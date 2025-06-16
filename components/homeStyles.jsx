@@ -17,7 +17,6 @@ const homeStyles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
     overflow: 'hidden',
-    
   },
   restaurantInfo: {
     padding: 16,

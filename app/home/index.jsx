@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import { db } from "@/backend/firebaseConfig.js";
 import { collection, getDocs } from "firebase/firestore";
+import { router } from 'expo-router';
 
 export default function Home() {
   const [restaurants, setRestaurants] = useState([]);
@@ -26,7 +27,7 @@ export default function Home() {
   }, []);
 
   const renderRestaurant = ({ item }) => (
-    <TouchableOpacity style={homeStyles.restaurantCard}>
+    <TouchableOpacity style={homeStyles.restaurantCard} onPress={() => router.push(`/menu?id=${item.id}`)}>
       
       <View style={homeStyles.restaurantInfo}>
         <View style={homeStyles.restaurantHeader}>
