@@ -53,7 +53,7 @@ export default function AuthScreen() {
       }
 
       try{
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+        await createUserWithEmailAndPassword(auth, email, password)
       }catch (err){
         setReadableError(err)
         return;
@@ -61,7 +61,7 @@ export default function AuthScreen() {
 
     }else{
       try{
-        const userCredential = await signInWithEmailAndPassword(auth, email, password)
+        await signInWithEmailAndPassword(auth, email, password)
       }catch (err){
         setReadableError(err)
         return;
