@@ -115,6 +115,12 @@ export default function MenuScreen() {
     </TouchableOpacity>
   );
 
+  const completeOrder = () => {
+  if (cartItems.length === 0) return;
+  setCartItems([]);
+  setIsCartVisible(false);
+};
+
   return (
     <View style={menuStyles.container}>
       <Text style={menuStyles.restaurantName}>{restaurant.name}</Text>
@@ -164,6 +170,11 @@ export default function MenuScreen() {
               <Text>Your cart is empty.</Text>
             )}
             <Text style={menuStyles.cartTotal}>Total: ${calculateTotalPrice().toFixed(2)}</Text>
+            <Button
+              color="#28a745"
+              title="Complete Order"
+              onPress={completeOrder}
+            />
             <Button color='#28a745' title="Close Cart" onPress={() => setIsCartVisible(false)} />
           </View>
         </View>
