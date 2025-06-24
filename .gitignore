@@ -41,3 +41,4 @@ app-example
 .vscode
 .idea
 serviceAccountKey.json
+.env

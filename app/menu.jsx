@@ -21,7 +21,7 @@ export default function MenuScreen() {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/restaurant/${id}`);
+      const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/restaurant/${id}`);
       const data = await response.json();
 
       if (response.ok) {

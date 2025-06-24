@@ -10,7 +10,7 @@ export default function Home() {
   useEffect(() => {
   const fetchRestaurants = async () => {
     try {
-      const response = await fetch('http://localhost:3000/restaurants');
+      const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/restaurants`);
       const data = await response.json();
       setRestaurants(data);
     } catch (error) {
