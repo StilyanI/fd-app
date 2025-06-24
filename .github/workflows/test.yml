@@ -1,7 +1,7 @@
 name: Start Expo App
 
 on:
-  workflow_dispatch:
+  push:
 
 jobs:
   start-expo:
@@ -14,7 +14,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18  # Adjust as needed
+          node-version: 18
 
       - name: Install dependencies
         run: npm install
@@ -24,8 +24,8 @@ jobs:
 
       - name: Start Expo server (development mode)
         run: |
-          nohup npx expo start --dev-client --no-interactive > expo.log 2>&1 &
-          sleep 30  # Give time for server to boot
+          npm start &
+          sleep 30
 
       - name: Output log
         run: cat expo.log
