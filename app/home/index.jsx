@@ -9,22 +9,37 @@ import { router } from 'expo-router';
 export default function Home() {
   const [restaurants, setRestaurants] = useState([]);
 
-  const getRestaurants = async () => {
+  // const getRestaurants = async () => {
+  //   try {
+  //     const querySnapshot = await getDocs(collection(db, 'restaurants'));
+  //     const data = querySnapshot.docs.map(doc => ({
+  //       id: doc.id,
+  //       ...doc.data(),
+  //     }));
+  //     setRestaurants(data);
+  //   } catch (error) {
+  //     console.error('Error fetching restaurants:', error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getRestaurants();
+  // }, []);
+
+  useEffect(() => {
+  const fetchRestaurants = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, 'restaurants'));
-      const data = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+      const response = await fetch('http://localhost:3000/restaurants');
+      const data = await response.json();
       setRestaurants(data);
     } catch (error) {
-      console.error('Error fetching restaurants:', error);
+      console.error('Error fetching restaurants from API:', error);
     }
   };
 
-  useEffect(() => {
-    getRestaurants();
-  }, []);
+  fetchRestaurants();
+}, []);
+
 
   const renderRestaurant = ({ item }) => (
     <TouchableOpacity style={homeStyles.restaurantCard} onPress={() => router.push(`/menu?id=${item.id}`)}>
