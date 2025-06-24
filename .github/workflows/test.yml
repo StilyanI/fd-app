@@ -1,0 +1,31 @@
+name: Start Expo App
+
+on:
+  workflow_dispatch:
+
+jobs:
+  start-expo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18  # Adjust as needed
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Expo CLI globally
+        run: npm install -g expo-cli
+
+      - name: Start Expo server (development mode)
+        run: |
+          nohup npx expo start --dev-client --no-interactive > expo.log 2>&1 &
+          sleep 30  # Give time for server to boot
+
+      - name: Output log
+        run: cat expo.log
