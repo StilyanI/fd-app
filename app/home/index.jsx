@@ -2,29 +2,10 @@ import homeStyles from "@/components/homeStyles.jsx";
 import styles from "@/components/styles.jsx";
 import { useState, useEffect } from "react";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
-import { db } from "@/backend/firebaseConfig.js";
-import { collection, getDocs } from "firebase/firestore";
 import { router } from 'expo-router';
 
 export default function Home() {
   const [restaurants, setRestaurants] = useState([]);
-
-  // const getRestaurants = async () => {
-  //   try {
-  //     const querySnapshot = await getDocs(collection(db, 'restaurants'));
-  //     const data = querySnapshot.docs.map(doc => ({
-  //       id: doc.id,
-  //       ...doc.data(),
-  //     }));
-  //     setRestaurants(data);
-  //   } catch (error) {
-  //     console.error('Error fetching restaurants:', error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getRestaurants();
-  // }, []);
 
   useEffect(() => {
   const fetchRestaurants = async () => {

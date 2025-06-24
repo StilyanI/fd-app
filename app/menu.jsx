@@ -1,8 +1,6 @@
 import { View, Text, FlatList, TouchableOpacity, Modal, Button, ScrollView } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { db } from "@/backend/firebaseConfig.js";
-import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 import menuStyles from "@/components/menuStyles.jsx";
 
 export default function MenuScreen() {
@@ -15,39 +13,33 @@ export default function MenuScreen() {
   const [isCartVisible, setIsCartVisible] = useState(false);
 
   useEffect(() => {
-    const fetchRestaurantAndMenu = async () => {
-      if (!id) {
-        setError("No restaurant ID provided.");
-        setLoading(false);
-        return;
+  const fetchMenu = async () => {
+    if (!id) {
+      setError("No restaurant ID provided.");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:3000/restaurant/${id}`);
+      const data = await response.json();
+
+      if (response.ok) {
+        setRestaurant(data.restaurant);
+        setMenuItems(data.menu);
+      } else {
+        setError(data.error || "Failed to fetch restaurant.");
       }
-      try {
-        const restaurantDocRef = doc(db, 'restaurants', id);
-        const restaurantDocSnap = await getDoc(restaurantDocRef);
+    } catch (err) {
+      console.error("Error fetching restaurant or menu:", err);
+      setError("Failed to load restaurant or menu data.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        if (restaurantDocSnap.exists()) {
-          setRestaurant({ id: restaurantDocSnap.id, ...restaurantDocSnap.data() });
-
-          const menuCollectionRef = collection(db, 'restaurants', id, 'menu');
-          const menuSnapshot = await getDocs(menuCollectionRef);
-          const items = menuSnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-          setMenuItems(items);
-        } else {
-          setError("Restaurant not found.");
-        }
-      } catch (err) {
-        console.error("Error fetching restaurant or menu:", err);
-        setError("Failed to load restaurant or menu data.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRestaurantAndMenu();
-  }, [id]);
+  fetchMenu();
+}, [id]);
 
   const addToCart = (item) => {
     setCartItems(prevItems => {
