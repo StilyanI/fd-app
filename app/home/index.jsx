@@ -2,29 +2,28 @@ import homeStyles from "@/components/homeStyles.jsx";
 import styles from "@/components/styles.jsx";
 import { useState, useEffect } from "react";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
-import { db } from "@/backend/firebaseConfig.js";
-import { collection, getDocs } from "firebase/firestore";
 import { router } from 'expo-router';
 
 export default function Home() {
   const [restaurants, setRestaurants] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const getRestaurants = async () => {
+  useEffect(() => {
+  const fetchRestaurants = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, 'restaurants'));
-      const data = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+      const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/restaurants`);
+      const data = await response.json();
       setRestaurants(data);
     } catch (error) {
-      console.error('Error fetching restaurants:', error);
+      console.error('Error fetching restaurants from API:', error);
+    } finally {
+      setLoading(false)
     }
   };
 
-  useEffect(() => {
-    getRestaurants();
-  }, []);
+  fetchRestaurants();
+}, []);
+
 
   const renderRestaurant = ({ item }) => (
     <TouchableOpacity style={homeStyles.restaurantCard} onPress={() => router.push(`/menu?id=${item.id}`)}>
@@ -43,7 +42,16 @@ export default function Home() {
     </TouchableOpacity>
   );
 
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <Text>Loading menu...</Text>
+      </View>
+    );
+  }
+
   return (
+
     <View style={styles.container}>
       
       <FlatList
