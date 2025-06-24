@@ -26,6 +26,3 @@ jobs:
         run: |
           npm start &
           sleep 30
-
-      - name: Output log
-        run: cat expo.log
