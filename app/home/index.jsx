@@ -6,6 +6,7 @@ import { router } from 'expo-router';
 
 export default function Home() {
   const [restaurants, setRestaurants] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
   const fetchRestaurants = async () => {
@@ -15,6 +16,8 @@ export default function Home() {
       setRestaurants(data);
     } catch (error) {
       console.error('Error fetching restaurants from API:', error);
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -39,7 +42,16 @@ export default function Home() {
     </TouchableOpacity>
   );
 
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <Text>Loading menu...</Text>
+      </View>
+    );
+  }
+
   return (
+
     <View style={styles.container}>
       
       <FlatList
